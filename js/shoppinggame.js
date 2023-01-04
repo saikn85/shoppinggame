@@ -47,12 +47,25 @@ Object.defineProperty(Product, "daysToExpire", {
 });
 
 // Add method getDetails to Product here
+Product.prototype.getDetails = () => {
+  `Product Name: ${this.name} , Product Price: ${this.price}`;
+};
 
 // Define the MagicProduct class here
+class MagicProduct extends Product {
+  point;
+  isBonus;
+  constructor(id, name, price, expiryDate, point, isBonus) {
+    Product.call(id, name, price, expiryDate);
+    this.point = point;
+    this.isBonus = isBonus;
+  }
+}
 
 // Establish inheritance between Product() & MagicProduct() here
 
 // Define Rating class here
+
 
 // Complete the loadProducts function
 const loadProducts = (map, prodId) => {

@@ -43,14 +43,14 @@ Object.defineProperty(Product.prototype, "daysToExpire", {
 });
 
 // Add method getDetails to Product here
-Product.prototype.getDetails = () => {
-  `Product Name: ${this.name} , Product Price: ${this.price}`;
+Product.prototype.getDetails = function () {
+  return `Product Name: ${this.name} , Product Price: ${this.price}`;
 };
 
 // Define the MagicProduct class here
-function MagicProduct(id, name, price, expiryDate, point, isBonus) {
-  Product.call(id, name, price, expiryDate);
-  this.point = point;
+function MagicProduct(id, name, price, expiryDate, points, isBonus) {
+  Product.call(this, id, name, price, expiryDate);
+  this.points = points;
   this.isBonus = isBonus;
 }
 
@@ -59,8 +59,6 @@ MagicProduct.prototype = Object.create(Product.prototype);
 
 // Define Rating class here
 class Rating {
-  rate;
-
   constructor() {
     this.rate = "";
   }
@@ -69,10 +67,15 @@ class Rating {
    * @param {number} value
    */
   set rating(value) {
-    if (value > 1 && value <= 4) this.rate = "OK";
-    if (value >= 5 && value <= 7) this.rate = "GOOD";
-    if (value > 7) this.rate = "EXCEPTIONAL";
-    else this.rate = "BAD";
+    if (value > 1 && value <= 4) {
+      this.rate = "OK";
+    } else if (value >= 5 && value <= 7) {
+      this.rate = "GOOD";
+    } else if (value > 7) {
+      this.rate = "EXCEPTIONAL";
+    } else {
+      this.rate = "BAD";
+    }
   }
 }
 

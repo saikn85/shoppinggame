@@ -65,7 +65,18 @@ class MagicProduct extends Product {
 // Establish inheritance between Product() & MagicProduct() here
 
 // Define Rating class here
-
+class Rating {
+  rate;
+  constructor() {
+    this.rate = "";
+  }
+  rating(value) {
+    if (value > 1 && value <= 4) this.rate = "OK";
+    if (value >= 5 && value <= 7) this.rate = "GOOD";
+    if (value > 7) this.rate = "EXCEPTIONAL";
+    else this.rate = "BAD";
+  }
+}
 
 // Complete the loadProducts function
 const loadProducts = (map, prodId) => {

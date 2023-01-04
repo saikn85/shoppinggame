@@ -5,7 +5,7 @@ const score = 0;
 const items = 0;
 
 // Define the player object here
-let Player = {
+let player = {
   name,
   score,
   items,
@@ -20,29 +20,25 @@ let Player = {
   },
 };
 // Define the Product class - write the Constructor function for Product class here
-class Product {
-  id;
-  name;
-  price;
-  expiryDate;
-
-  constructor(id, name, price, expiryDate) {
-    this.id = id;
-    this.name = name;
-    this.price = price;
-    this.expiryDate = expiryDate;
-  }
+function Product(id, name, price, expiryDate) {
+  this.id = id;
+  this.name = name;
+  this.price = price;
+  this.expiryDate = expiryDate;
 }
 
 // Complete the dateDiff function
 const dateDiff = (date1, date2) => {
-  return Math.round(new Date(date1) - new Date(date2));
+  const oneDay = 24 * 60 * 60 * 1000;
+  const diffDays = Math.round(Math.abs((date2 - date1) / oneDay));
+
+  return diffDays;
 };
 
 // Here, use Object.defineProperty to create property - daysToExpire
-Object.defineProperty(Product, "daysToExpire", {
+Object.defineProperty(Product.prototype, "daysToExpire", {
   get() {
-    return dateDiff(expiryDate, new Date());
+    return dateDiff(this.expiryDate, new Date());
   },
 });
 
@@ -52,25 +48,27 @@ Product.prototype.getDetails = () => {
 };
 
 // Define the MagicProduct class here
-class MagicProduct extends Product {
-  point;
-  isBonus;
-  constructor(id, name, price, expiryDate, point, isBonus) {
-    Product.call(id, name, price, expiryDate);
-    this.point = point;
-    this.isBonus = isBonus;
-  }
+function MagicProduct(id, name, price, expiryDate, point, isBonus) {
+  Product.call(id, name, price, expiryDate);
+  this.point = point;
+  this.isBonus = isBonus;
 }
 
 // Establish inheritance between Product() & MagicProduct() here
+MagicProduct.prototype = Object.create(Product.prototype);
 
 // Define Rating class here
 class Rating {
   rate;
+
   constructor() {
     this.rate = "";
   }
-  rating(value) {
+
+  /**
+   * @param {number} value
+   */
+  set rating(value) {
     if (value > 1 && value <= 4) this.rate = "OK";
     if (value >= 5 && value <= 7) this.rate = "GOOD";
     if (value > 7) this.rate = "EXCEPTIONAL";
